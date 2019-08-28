@@ -1,5 +1,5 @@
 import Search from './models/Search';
-import * as searchView from './views/SearchvView';
+import * as searchView from './views/SearchView';
 import {elements, renderLoader, clearLoader} from './views/base'
 
 /** Global State of the app
