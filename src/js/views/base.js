@@ -5,11 +5,13 @@ export const elements = {
     searchForm: $('.search'),
     searchInput: $('.search__field'),
     searchResList: $('.results__list'),
-    searchRes: $('.results')
+    searchRes: $('.results'),
+    searchResPages: $('.results__pages')
+
 }
 
 const elementStrings = {
-    loader: "loader"
+    loader: "loader",
 }
 
 export const renderLoader = parent => {
