@@ -2,6 +2,9 @@ import Search from './models/Search';
 import Recipe from './models/Recipe'
 import * as searchView from './views/SearchView';
 import {elements, renderLoader, clearLoader} from './views/base'
+import jquery from 'jquery';
+
+const $ = jquery;
 
 /**
  *  Global State of the app
@@ -16,8 +19,8 @@ const state = {};
  */
 const controlSearch = async () => {
     //1. Get query from view
-    const query = searchView.getInput()    
-    // console.log(query);
+    const query = searchView.getInput();
+    console.log(query);
 
     //2. New Search object and add to state
     state.search = new Search(query);
@@ -30,24 +33,24 @@ const controlSearch = async () => {
 
 
     //4. Search for recipes
-    try{
+    try {
         await state.search.getResults();
 
         //5. Render results on UI
         clearLoader()
         searchView.renderRecipes(state.search.recipes) 
     }catch(err){
-        console.log("Something went wrong")
+        console.log("this is some bullshit")
         clearLoader()
     }
-   
-       
 }
 
 elements.searchForm.submit(e => {
     e.preventDefault();
     controlSearch();
 });
+
+//TESTING
 
 elements.searchResPages.click( e => {
     const btn = e.target.closest('.btn-inline');
@@ -63,23 +66,25 @@ elements.searchResPages.click( e => {
  */
 const controlRecipe = async () => {
     const id = window.location.hash.replace("#", '');
-    console.log(id);
+    console.log("this is actually working");
+
     if(id){
         // 1. Prepare UI for change
 
         // 2. Create a new Recipe object and add it to state
         state.recipe = new Recipe(id)
         try{
-            // 3. Get Recipe Data
-        await state.recipe.getRecipe()
-        // 4. Calculate the servings and Time
-        state.recipe.calcTime()
-        state.recipe.calcServings();
-        // 5. Render Recipe
-        console.log(state.recipe);
+            // 3. Get Recipe Data and parse ingredients
+            await state.recipe.getRecipe()
+            state.recipe.parseIngredients()
+            // 4. Calculate the servings and Time
+            state.recipe.calcTime()
+            state.recipe.calcServings();
+            // 5. Render Recipe
+            console.log(state.recipe);
         }catch(err){
             alert("Something went wrong! with recipe processing")
-            log(err)
+            console.log(err)
 
         }
         
