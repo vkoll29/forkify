@@ -1,10 +1,23 @@
 import {elements} from './base'
 
 export const getInput = () => elements.searchInput.val();
-export const clearInput = () => {elements.searchInput.val('')}
+export const clearInput = () => { elements.searchInput.val('') };
 export const clearResults = () => {
     elements.searchResList.html('');
     elements.searchResPages.html('');
+};
+
+/***
+ * Ignoring this method used to highlight the selected recipe because it is wasting my time
+ */
+export const highlightSelected = id => {
+    // document.querySelector(`a[href*="${id}"]`).classList.add('results__link--active');
+
+    const resultsArr = Array.from($('.results__link'));
+    resultsArr.forEach(el => {
+        el.removeclass('results__link--active');
+    })
+    $(`#${id}`).addClass('results__link--active');
 }
 
 const limitRecipeTitle = (title, limit = 17) => {
@@ -24,7 +37,7 @@ const limitRecipeTitle = (title, limit = 17) => {
 const renderRecipe = recipe => {
     const markup = `
         <li>
-            <a class="results__link results__link--active" href="#${recipe.recipe_id}">
+            <a class="results__link " href="#${recipe.recipe_id}">
                 <figure class="results__fig">
                     <img src="${recipe.image_url}" alt="${recipe.title}">
                 </figure>
