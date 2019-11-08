@@ -35,7 +35,7 @@ const renderRecipe = recipe => {
             </a>
          </li>
          `;
-    elements.searchResList.append(markup)
+    elements.searchResList.append(markup);
 }
 
 const createButton = (page, type) => 
