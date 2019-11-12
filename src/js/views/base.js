@@ -7,7 +7,8 @@ export const elements = {
     searchResList: $('.results__list'),
     searchRes: $('.results'),
     searchResPages: $('.results__pages'),
-    recipe: $('.recipe')
+    recipe: $('.recipe'),
+    shopping: $('.shopping__list')
 
 }
 
