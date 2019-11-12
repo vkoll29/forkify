@@ -13,7 +13,7 @@ const $ = jquery;
  *  Global State of the app
  */
 const state = {};
-
+window.s = state;
 /** SEARCH CONTROLLER
  * - Search object
  * - Current recipe object
@@ -118,7 +118,25 @@ const controlList = () => {
 }
 
 //Handle delete and update list item events
+elements.shopping.click(e => {
+    const id = e.target.closest('.shopping__item').dataset.itemid;
 
+    //Handle delete
+    if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+        //Delete from state
+        state.list.deleteItem(id);
+        //Delete from view
+
+        listView.deleteItem(id);
+        //Handle update count
+    } else if (e.target.matches('.shopping__count-value')) {
+        const val = parseFloat(e.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+
+    
+
+})
 
 //Recipe button clicks
 elements.recipe.click(e => {
