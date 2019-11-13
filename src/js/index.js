@@ -1,6 +1,7 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
@@ -102,8 +103,9 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach(e => window.addEventListener(e, controlRecipe))
 
-/**
- * LIST CONTROLLER
+/**LIST CONTROLLER
+ *  - NEew list
+ * - Add ingredients to the list
  */
 
 const controlList = () => {
@@ -116,6 +118,46 @@ const controlList = () => {
         listView.renderItem(item);
     });
 }
+
+/**LIKES CONTROLLER
+ *  
+ */
+
+const controlLike = () => {
+    if (!state.likes) state.likes = new Likes();
+    const currentID = state.recipe.id
+
+    //User has NOT yet liked the recipe
+    if (!state.likes.isLiked(currentID)) {
+        console.log(currentID)
+        //Add like to the recipe
+        console.log("no likes")
+        const newLike = state.likes.addLike(
+            currentID,
+            state.recipe.title,
+            state.recipe.publisher,
+            state.recipe.img
+        )
+        console.log(newLike)
+
+        //Toggle like button to full
+
+        //Add like to UI list
+        console.log(state.likes)
+
+        //User has liked the recipe already
+    } else {
+        //Remove like from the state
+        console.log("already liked")
+        state.likes.deleteLike(currentID)
+        //Toggle lke button to half
+
+        //Remove the liked recipe from the likes list
+        console.log(state.likes)
+    }
+ }
+
+
 
 //Handle delete and update list item events
 elements.shopping.click(e => {
@@ -138,7 +180,7 @@ elements.shopping.click(e => {
 
 })
 
-//Recipe button clicks
+//Handle different Recipe button clicks
 elements.recipe.click(e => {
     if (e.target.matches('.btn-decrease, .btn-decrease *')) {
         if (state.recipe.servings > 1) {
@@ -151,12 +193,12 @@ elements.recipe.click(e => {
     } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
         // Add ingredients to shopping list
         controlList();
-    } else {
-        console.log("fick");
-        
-    }
+    } else if (e.target.matches('.recipe__love, .recipe__love *')) {
+        //Add recipe to the list of liked recipes
+        controlLike();
+                console.log(`${e.target} is clickedddd!`)
 
+    } 
         
 })
 
-window.l = new List;
