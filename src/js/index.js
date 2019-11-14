@@ -5,6 +5,7 @@ import Likes from './models/Likes';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView'
 import {elements, renderLoader, clearLoader} from './views/base'
 import jquery from 'jquery';
 
@@ -89,7 +90,7 @@ const controlRecipe = async () => {
             // 5. Render Recipe
             
             clearLoader();
-            recipeView.renderRecipe(state.recipe);
+            recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
         }catch(err){
             alert("Something went wrong with recipe processing")
             console.log(err)
@@ -123,15 +124,15 @@ const controlList = () => {
  *  
  */
 
+//TESTING
+state.likes = new Likes();
 const controlLike = () => {
     if (!state.likes) state.likes = new Likes();
     const currentID = state.recipe.id
 
     //User has NOT yet liked the recipe
     if (!state.likes.isLiked(currentID)) {
-        console.log(currentID)
         //Add like to the recipe
-        console.log("no likes")
         const newLike = state.likes.addLike(
             currentID,
             state.recipe.title,
@@ -141,20 +142,21 @@ const controlLike = () => {
         console.log(newLike)
 
         //Toggle like button to full
+        likesView.toggleButton(true);
 
         //Add like to UI list
-        console.log(state.likes)
+        likesView.renderLike(newLike);
 
         //User has liked the recipe already
     } else {
         //Remove like from the state
-        console.log("already liked")
         state.likes.deleteLike(currentID)
         //Toggle lke button to half
-
+        likesView.toggleButton(false);
         //Remove the liked recipe from the likes list
-        console.log(state.likes)
+        likesView.deleteLike(currentID)
     }
+    // likesView.toggleLikeMenu(state.likes.getNumLikes())
  }
 
 
@@ -196,7 +198,6 @@ elements.recipe.click(e => {
     } else if (e.target.matches('.recipe__love, .recipe__love *')) {
         //Add recipe to the list of liked recipes
         controlLike();
-                console.log(`${e.target} is clickedddd!`)
 
     } 
         

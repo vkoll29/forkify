@@ -8,12 +8,14 @@ export const elements = {
     searchRes: $('.results'),
     searchResPages: $('.results__pages'),
     recipe: $('.recipe'),
-    shopping: $('.shopping__list')
+    shopping: $('.shopping__list'),
+    likesMenu: $('.likes__field'),
+    likesList: $('.likes__list')
 
 }
 
 const elementStrings = {
-    loader: "loader",
+    loader: "loader"
 }
 
 export const renderLoader = parent => {
