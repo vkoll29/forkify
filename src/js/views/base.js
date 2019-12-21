@@ -9,7 +9,8 @@ export const elements = {
     searchResPages: $('.results__pages'),
     recipe: $('.recipe'),
     shopping: $('.shopping__list'),
-    likesMenu: $('.likes__field'),
+    // likesMenu: $('.likes__field'),
+    likesMenu: document.querySelector('.likes__field'),
     likesList: $('.likes__list')
 
 }
